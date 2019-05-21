@@ -57,13 +57,113 @@
       </div>
     </nav>
 
+    <!-- Project Containers -->
+
+    <section class="page-section">
+        <div class="container">
+          <div class="product-item">
+            <div class="product-item-title d-flex">
+              <div class="bg-faded p-5 d-flex mr-auto rounded">
+                <h2 class="section-heading mb-0">
+                  <span class="section-heading-upper">Dev Environment</span>
+                  <span class="section-heading-lower">Docker</span>
+                </h2>
+              </div>
+            </div>
+            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="img/projects-04.jpg" alt="">
+            <div class="product-item-description d-flex ml-auto">
+              <div class="bg-faded p-5 rounded">
+                <h3><a href="https://cloud.docker.com/u/rooskimus/repository/docker/rooskimus/wp-xdebug-phpunit">Custom WordPress Image</a></h3>
+                <p class="mb-0">
+                  Working with and learning more about Docker was a great experience.  What I did barely scratched the surface but I can see the potential power of using dockerized apps and environments.  In this case we used them to create our development environment for a WordPress plugin.  When I began working on the plugin, the developer who had set up the environment was no longer at the company.  The developer who had taken over the project didn't know much about docker.  In fact, he had me install PHP locally because he didn't understand at the time that the version we were actually using was running within the docker container.  We also had no way to debug or test the plugin, which in my opinion is a big barrier to developing quality code quickly.
+                </p>
+                    <br>
+                <p class="mb-0">
+                  I took it upon myself to figure out exactly how the environment was being created, what was happening under the hood of the docker container, and how I could customize it to create a WordPress image that could support XDebug and PHP Unit.  First, not understanding Docker fully, I set up XDebug on my local installation of PHP.  It worked running PHP files locally in IIS, but not for our WordPress.  Then I discovered the interactive command-line within the container and began to explore the container itself which was my first foray into a Linux environment.  After much experimentation and searching, I found another Docker image that had XDebug installed and used that as a base into which to add PHP Unit.  None of the package installers had versions of PHP Unit that would install nicely, so I had to create Bash CLI code that would update apt-get, install wget, download a specific version of PHP Unit, rename and move it to the /usr/local/bin, and make it executable.  Because of my experimentation installing XDebug, I was able to get PHP Unit working relatively easily.
+                </p>
+                  <br>
+                <p class="mb-0">
+                  Sadly I didn't keep a copy of the Dockerfile for myself, but at least the results may be viewed on my dockerhub where I hosted the file image until I discovered another co-worker had set up a private docker repo for a very different application of docker and moved the company's version of the image to live there.
+                </p>
+                  
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     <section class="page-section">
       <div class="container">
         <div class="product-item">
           <div class="product-item-title d-flex">
             <div class="bg-faded p-5 d-flex ml-auto rounded">
               <h2 class="section-heading mb-0">
-                <span class="section-heading-upper">Working Together</span>
+                <span class="section-heading-upper">Google Analytics</span>
+                <span class="section-heading-lower">Authentication</span>
+              </h2>
+            </div>
+          </div>
+          <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="img/projects-05.jpg" alt="">
+          <div class="product-item-description d-flex mr-auto">
+            <div class="bg-faded p-5 rounded">
+              <a href="http://www.markwemekamp.com/blog/c/how-to-read-from-google-analytics-using-c/"><h3>GA Cacher</h3></a>
+              <p class="mb-0">
+                One project I undertook was to add functionality to an existing app that runs in a Linux VM and caches Google Analytics data which is incorporated into a Dashboard view served to clients.  The primary issue was that when the GA Cacher had been created it was made to use OAuth 2.0 validation which is a user validation method.  This meant that to run the cacher we had to run a VM with a Desktop OS installed, RDP into that Desktop, start the cacher and log into each GA Account in a web browser to provide authentication.  This is a bit unwieldy and takes a function that could run more cheaply as an Azure Function and gave it significant overhead.  It also meant that every so often we would have to manually create and add new GA Accounts because each one can only have so many projects (i.e. tenants) associated with it, and would occasionally require clients to send client secrets and IDs.  As we were aiming to onboard clients in a more automatic fashion, this wouldn't do.
+              </p>
+              <br>
+              <p class="mb-0">
+                After a bit of a dive into Google documentation, I determined that what we needed to use was a Service Account.  These allow server-to-server authentication without a user login.  Sadly, the code to do so in C# was not so clearly documented.  Eventually I found what I needed by skimming through various forums and blogs.  After a bit of debugging surrounding a disconnect between the C# code and the return from a SQL query, I was able to get the service account method active and wrote up the documentation for how clients can authorize the service account.
+              </p>
+              <br>
+              <p class="mb-0">
+                This all being code in the company's private repo, the link above links to the blog that describes how to set up a service account using C#.  It was very helpful!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="wpplugin">
+      <div class="container">
+        <div class="product-item">
+          <div class="product-item-title d-flex">
+            <div class="bg-faded p-5 d-flex mr-auto rounded">
+              <h2 class="section-heading mb-0">
+                <span class="section-heading-upper">Gimme Options Yo</span>
+                <span class="section-heading-lower">WordPress</span>
+              </h2>
+            </div>
+          </div>
+          <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="img/projects-06.jpg" alt="">
+          <div class="product-item-description d-flex ml-auto">
+            <div class="bg-faded p-5 rounded">
+              <h3><a href="#wpplugin">WordPress Plugin</a></h3>
+              <p class="mb-0">
+                One of the first projects I began working on at my last workplace was the development of a WordPress plugin.  This was a bit tricky at first because I had never worked with WordPress nor PHP, both of which come with their own quirks.  The issue I was set upon was that when the plugin was installed and activated for the first time any options selected before hitting the 'save options' button the first time would be lost.  From the second time forward the options would persist.  New language and syntax aside, this was made even trickier because at the time we had no way to debug our code. You may have noticed I fixed that later per the project above.
+              </p>
+                  <br>
+              <p class="mb-0">
+                I was pointed to a validation function that was responsible for persisting options that had been set on a different tab.  However, after quite a bit of tearing the code apart piece by piece, I found that piece had nothing to do with the issue.  It occured to me, though, that the issue was that when the plugin was activated there was no options table created in the WordPress database, which meant that the first time you hit 'save options' it created the table.  But, for some reason I never figured out, it wasn't able to bring the values for the options you had selected into the table when it was created.
+              </p>
+                <br>
+              <p class="mb-0">
+                I looked into the activation function (or activation hook as they call it) and found that if I created an options table within the function when the plugin was activated, the issue was solved.  The only problem then was that the options were hard-coded in 3 places already and adding another place where they had to be hard-coded seemed a bit silly.  Then, just as a bit of an experiment, I tried passing an empty array to the options table at generation as a placeholder.  It worked, resulting in a decoupled piece of code that works on its own and may now be forgotten about.
+              </p>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="container">
+        <div class="product-item">
+          <div class="product-item-title d-flex">
+            <div class="bg-faded p-5 d-flex ml-auto rounded">
+              <h2 class="section-heading mb-0">
+                <span class="section-heading-upper">Student Collaboration</span>
                 <span class="section-heading-lower">Live Project</span>
               </h2>
             </div>
@@ -148,7 +248,9 @@
     <footer class="footer text-faded text-center py-5 mt-5">
       <div class="container">
         <p class="m-0 small">Copyright &copy; Andrew Breidenbach 2018</p>
-        <p class="m-0 small">Images on this page are open-license</p>
+        <p class="m-0 small">Images on this page are open-license, attribution for those required below.</p>
+        <p class="m-0 small"><a href="https://www.flickr.com/photos/aaronpk/5060305871">Super Crazy Dashboard</a> by <a href="https://www.flickr.com/photos/aaronpk/">Aaron Pareckl</a> used under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></p>
+
       </div>
     </footer>
 
